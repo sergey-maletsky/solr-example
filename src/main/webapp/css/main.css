@@ -1,0 +1,13 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+.entity-area {
+    border: 1px solid black;
+    margin: 10px 0px;
+    width: 500px;
+}
+
+#error-field {
+    color: red;
+}
