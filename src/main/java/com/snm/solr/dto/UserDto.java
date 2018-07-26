@@ -8,17 +8,17 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
 
     @NotBlank
-    private String name;
+    private String name_t;
 
     @NotNull
     private Integer age;
 
-    public String getName() {
-        return name;
+    public String getName_t() {
+        return name_t;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName_t(String name_t) {
+        this.name_t = name_t;
     }
 
     public Integer getAge() {

@@ -1,6 +1,5 @@
 package com.snm.solr.model;
 
-import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
@@ -13,17 +12,17 @@ public class User {
     private String id;
 
     @Indexed
-    private String name;
+    private String name_t;
 
-    @Field
+    @Indexed
     private Integer age;
 
     public User() {
     }
 
-    public User(String id, String name, Integer age) {
+    public User(String id, String name_t, Integer age) {
         this.id = id;
-        this.name = name;
+        this.name_t = name_t;
         this.age = age;
     }
 
@@ -35,12 +34,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getName_t() {
+        return name_t;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName_t(String name_t) {
+        this.name_t = name_t;
     }
 
     public Integer getAge() {
@@ -53,6 +52,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "Customer [id=" + this.id + ", name=" + this.name + ", age=" + this.age + "]";
+        return "Customer [id=" + this.id + ", name=" + this.name_t + ", age=" + this.age + "]";
     }
 }

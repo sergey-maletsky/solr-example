@@ -12,7 +12,7 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
     public UserDto convert(User user) {
 
         UserDto dto = new UserDto();
-        dto.setName(user.getName());
+        dto.setName_t(user.getName_t());
         dto.setAge(user.getAge());
 
         return dto;

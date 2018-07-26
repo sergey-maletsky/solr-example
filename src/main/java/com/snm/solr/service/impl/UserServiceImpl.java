@@ -2,7 +2,6 @@ package com.snm.solr.service.impl;
 
 import com.snm.solr.dto.UserDto;
 import com.snm.solr.dto.converter.BaseConverter;
-import com.snm.solr.exception.NotUniqueException;
 import com.snm.solr.model.User;
 import com.snm.solr.repository.UserRepository;
 import com.snm.solr.service.UserService;
@@ -13,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,12 +58,6 @@ public class UserServiceImpl implements UserService {
     @NotNull
     public UserDto save(@NotNull final UserDto userDto) {
 
-        List<User> existingUser = userRepository.findByName(userDto.getName());
-        if(!CollectionUtils.isEmpty(existingUser)) {
-            log.error("User with name {} already exists", userDto.getName());
-            throw new NotUniqueException("User with name " + userDto.getName() + " already exists");
-        }
-
         User newUser = converter.convert(userDto, User.class);
         return converter.convert(userRepository.save(newUser), UserDto.class);
     }
@@ -74,5 +67,31 @@ public class UserServiceImpl implements UserService {
     public List<User> saveAll(@NotNull Iterable<User> users) {
 
         return (List<User>) userRepository.saveAll(users);
+    }
+
+    @Override
+    public void createTestUsers() {
+
+        List<User> users = new ArrayList<>();
+        users.add(getUser("Robert De Niro", 20));
+        users.add(getUser("Robert De Niro", 24));
+        users.add(getUser("Robert O Rail", 25));
+        users.add(getUser("Victor O Rail", 20));
+        users.add(getUser("Victor De Niro", 30));
+        users.add(getUser("Victor O Niro", 20));
+        users.add(getUser("De Niro", 22));
+        users.add(getUser("De Rudo", 42));
+        users.add(getUser("Niro De Rudo", 33));
+        users.add(getUser("Victor O Rudo", 27));
+        users.add(getUser("Victor De Rudo", 19));
+        userRepository.saveAll(users);
+    }
+
+    private User getUser(String name, Integer age) {
+
+        User user = new User();
+        user.setName_t(name);
+        user.setAge(age);
+        return user;
     }
 }

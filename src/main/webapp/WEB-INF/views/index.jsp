@@ -26,8 +26,8 @@
         <c:otherwise>
             <c:forEach items="${users}" var="user" varStatus="count">
                 <tr class="users_tr">
-                    <td><a>${currentPage * currentPageSize + count.index + 1}</a></td>
-                    <td>${user.name}</td>
+                    <td>${currentPage * currentPageSize + count.index + 1}</td>
+                    <td>${user.name_t}</td>
                     <td>${user.age}</td>
                 </tr>
             </c:forEach>
@@ -80,7 +80,7 @@
 
 <form id="user" class="entity-area" name="add_user" action="" method="post">
     <div>Name</div>
-    <input id="name" name="name" type="text">
+    <input id="name" name="name_t" type="text">
     <p>
     <div>Age</div>
     <input id="age" name="age" type="text">

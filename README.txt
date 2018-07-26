@@ -7,17 +7,8 @@ I Общая информация
 1. Приложение работает на 7070 порту
 2. Swagger Api документация доступна по адресу http://localhost:7070/swagger-ui.html
 
-II Подготовка базы данных
 
-Настройки подключения базы данных находятся в файле src/main/resources/spring/database.properties
-
-1. Установить PostgreSQL 9.6
-2. Выполнить createdb.sql скрипт(в корне проекта) из PostgreSQL консоли
-под супер пользователем: psql -U postgres -a -f createdb.sql
-
-Скрипт создаст базу данных "solr_example" и нового пользователя "snm" с правами для доступа к этой бд.
-
-III Инструменты для сборки проекта
+II Инструменты для сборки проекта
 
 В проекте используется сборщик проектов Gradle.
 
@@ -32,7 +23,7 @@ III Инструменты для сборки проекта
 4. затем выполнить ./gradlew clean build(Linux) или gradlew.bat clean build(Win)
 5. и затем выполнить java -jar build/libs/solr-example-1.0.0.jar
 
-IV Настройка Solr
+III Настройка Solr
 
 1. перейти по ссылке http://www.apache.org/dyn/closer.lua/lucene/solr/7.4.0
 2. скачать архив Solr версии 7.4.0 и распаковать

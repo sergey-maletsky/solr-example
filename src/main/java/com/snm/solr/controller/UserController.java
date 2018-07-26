@@ -93,6 +93,7 @@ public class UserController {
         } else {
             UserDto newUserDto = userService.save(userDto);
             result = new JsonResult<>(NO_ERROR);
+            result.setMessage("create");
             result.setResult(newUserDto);
             responseEntity = new ResponseEntity<>(result, HttpStatus.CREATED);
         }

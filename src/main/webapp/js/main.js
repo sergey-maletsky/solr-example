@@ -91,12 +91,17 @@ $(function () {
         return $.ajax(options)
             .done(function (data) {
                 if (data.result) {
-                    $("#users_table .users_tr").remove();
                     var index = 0;
-                    $.each(data.result, function() {
-                        index++;
-                        $("#users_table").append("<tr class=\"users_tr\"> <td>" + index + "</td> <td>" + this.name + "</td> <td>" + this.age + "</td></tr>")
-                    });
+                    if (data.message !== 'create') {
+                        $("#users_table .users_tr").remove();
+                        $.each(data.result, function () {
+                            index++;
+                            $("#users_table").append("<tr class=\"users_tr\"> <td>" + index + "</td> <td>" + this.name_t + "</td> <td>" + this.age + "</td></tr>")
+                        });
+
+                    } else {
+                        $("#users_table").append("<tr class=\"users_tr\"> <td></td> <td>" + data.result.name_t + "</td> <td>" + data.result.age + "</td></tr>")
+                    }
                 }
 
                 if (data.message === "search") {

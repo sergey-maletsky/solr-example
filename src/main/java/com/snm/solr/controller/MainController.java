@@ -4,6 +4,7 @@ import com.snm.solr.model.User;
 import com.snm.solr.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,7 +29,14 @@ public class MainController {
             @PageableDefault(page = 0, size = DEFAULT_PAGE_SIZE, sort = "age", direction = Sort.Direction.ASC) Pageable pageable,
             ModelAndView modelAndView) {
 
-        Page<User> users = userService.list(pageable);
+        Page<User> users;
+        try {
+            users = userService.list(pageable);
+        } catch (DataAccessResourceFailureException ex) {
+            userService.createTestUsers();
+            users = userService.list(pageable);
+        }
+
         modelAndView.addObject("users", users.getContent());
         modelAndView.addObject("pagesTotal", users.getTotalPages());
         modelAndView.addObject("recordsTotal", users.getTotalElements());

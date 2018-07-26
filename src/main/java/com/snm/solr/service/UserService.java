@@ -23,4 +23,6 @@ public interface UserService {
     @NotNull List<User> saveAll(@NotNull Iterable<User> users);
 
     List<User> findAllByAge(Integer age);
+
+    void createTestUsers();
 }
