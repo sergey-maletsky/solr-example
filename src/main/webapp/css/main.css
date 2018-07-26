@@ -11,3 +11,12 @@ table, th, td {
 #error-field {
     color: red;
 }
+
+.users-pages_list-item {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.users-pages_list-item_current {
+    color: red;
+}

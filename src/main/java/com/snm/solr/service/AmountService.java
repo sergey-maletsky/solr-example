@@ -6,4 +6,6 @@ public interface AmountService {
     Amount findOne();
 
     Integer update(int i);
+
+    Integer processUsersAmount(Integer usersAmount);
 }

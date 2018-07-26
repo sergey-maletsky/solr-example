@@ -8,18 +8,18 @@ import java.util.*;
 
 public class UserGenerator {
 
-    private final static int nameLength = 15;
+    private final static int nameLength = 10;
     private final static int startAge = 18;
     private final static int endAge = 70;
 
-    public static Set<User> generateUsers(Integer usersAmount) {
+    public static List<User> generateUsers(Integer usersAmount) {
 
         Set<User> users = new HashSet<>();
         for (int i = 0; i < usersAmount; i++) {
             users.add(new User(generateId(), generateName(), generateAge()));
         }
 
-        return users;
+        return new ArrayList(users);
     }
 
     private static String generateId() {
@@ -27,7 +27,7 @@ public class UserGenerator {
     }
 
     private static String generateName() {
-        return RandomStringUtils.randomAlphabetic(nameLength);
+        return "user-" + RandomStringUtils.randomAlphabetic(nameLength);
     }
 
     private static Integer generateAge() {

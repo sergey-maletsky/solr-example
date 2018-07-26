@@ -1,84 +1,42 @@
 $(function () {
-    $('.date').datepicker({
-        'format': 'dd.mm.yyyy',
-        'autoclose': true
-    });
-    $('.time').timepicker({
-        'timeFormat': 'H:i',
-        'minTime': '07:00',
-        'maxTime': '20:00',
-        'step': 15
-    });
 
-    $('#study_time').datepair();
-
-    $("#study-submit").on("click", function (event) {
+    $("#user-submit").on("click", function (event) {
         event.preventDefault();
 
-        var formData = $("#study").serializeArray();
+        var formData = $("#user").serializeArray();
         var json = convertFormToJSON(formData);
-        post('/studies', json);
+        post('/users', json);
     });
 
-    $("#study-edited-submit").on("click", function (event) {
+    $("#generate").on("click", function (event) {
         event.preventDefault();
 
-        var formData = $("#study-edit").serializeArray();
+        var formData = $("#generate_users").serializeArray();
         var json = convertFormToJSON(formData);
-        var studyId = $("#study_id").text();
-        put('/studies/status/' + studyId, json);
+/*        var studyId = $("#study_id").text();*/
+        post('/users/generate', json);
     });
 
-    $("#patient-submit").on("click", function (event) {
+    $("#search-submit").on("click", function (event) {
         event.preventDefault();
 
-        var formData = $("#patient").serializeArray();
+        var formData = $("#search").serializeArray();
         var json = convertFormToJSON(formData);
-        post('/patients', json);
+        get('/users', json);
+    });
+
+    $("#search-clean").on("click", function (event) {
+        event.preventDefault();
+        location.reload();
     });
 
     function convertFormToJSON(formData) {
 
         var json = {};
         $.each(formData, function() {
-            var value = this.value;
-            if ((this.name === "startTime"
-                || this.name === "endTime") && this.value) {
-                value = convertTime(this.value);
-                json[this.name] = value;
-            } else if (this.name === "dateOfBirth" && this.value) {
-                value = convertDate(this.value);
-                json[this.name] = value;
-            } else if (this.name === "dateOfBirth"
-                || this.name === "startTime"
-                || this.name === "endTime") {
-            } else {
-                json[this.name] = value || "";
-            }
+            json[this.name] = this.value || "";
         });
-
         return json;
-    }
-
-    function convertTime(time) {
-
-        var currentDate = new Date();
-        if (time) {
-            var splitedTime = time.split(":");
-            currentDate.setHours(splitedTime[0]);
-            currentDate.setMinutes(splitedTime[1]);
-        }
-        return currentDate;
-    }
-
-    function convertDate(date) {
-
-        var convertedDate;
-        if (date) {
-            var splitedDate = date.split(".");
-            convertedDate = new Date(splitedDate[2], splitedDate[1] - 1, splitedDate[0]);
-        }
-        return convertedDate;
     }
 
     function post(url, json) {
@@ -113,6 +71,18 @@ $(function () {
         request(options);
     }
 
+    function get(url, json) {
+
+        options = {
+            method: 'GET',
+            accept: 'application/json',
+            url: url,
+            data: json,
+            dataType: "json"
+        }
+        request(options);
+    }
+
     function request(options, timeToWaitIfTimeout) {
 
         $('#error-field').text("");
@@ -120,7 +90,18 @@ $(function () {
 
         return $.ajax(options)
             .done(function (data) {
-                console.log(data);
+                if (data.result) {
+                    $("#users_table .users_tr").remove();
+                    var index = 0;
+                    $.each(data.result, function() {
+                        index++;
+                        $("#users_table").append("<tr class=\"users_tr\"> <td>" + index + "</td> <td>" + this.name + "</td> <td>" + this.age + "</td></tr>")
+                    });
+                }
+
+                if (data.message === "search") {
+                    $(".users-pages").remove();
+                }
             })
             .fail(function (jqXHR, textStatus) {
                 processError(jqXHR, options, textStatus, timeToWaitIfTimeout);
@@ -138,7 +119,7 @@ $(function () {
                 options.url, jqXHR.status, jqXHR.statusText); //validatorErrors
             var errors = $.parseJSON(jqXHR.responseText);
 
-            $('#error-field').text(errors.errorMessage ? errors.errorMessage : getValidatorErrors(errors.validatorErrors));
+            $('#error-field').text(errors.message ? errors.message : getValidatorErrors(errors.validatorErrors));
         }
     }
     

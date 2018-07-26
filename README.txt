@@ -38,4 +38,5 @@ IV Настройка Solr
 2. скачать архив Solr версии 7.4.0 и распаковать
 4. перейти в <распакованный архив solr>/bin
 5. в терминале выполнить "./solr start" (Linux) или "solr.cmd start" (Win)
-6. затем выполнить "./solr create -c users" (Linux) или "solr.cmd create -c users" (Win)
+6. затем выполнить "./solr create -c users" и "./solr create -c amounts" (Linux)
+или "solr.cmd create -c users" и "solr.cmd create -c amounts" (Win)
