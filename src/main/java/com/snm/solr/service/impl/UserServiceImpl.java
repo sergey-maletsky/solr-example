@@ -36,12 +36,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findAllByName(@NotNull String name, Pageable pageable) {
-        return userRepository.findByName(name, pageable);
+        return userRepository.findByName(name + "~1", pageable);
     }
 
     @Override
     public List<User> findAllByName(@NotNull String name) {
-        return userRepository.findByName(name);
+        return userRepository.findByName(name + "~1");
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllByNameOrAge(@NotNull String name, @NotNull Integer age) {
-        return userRepository.findByNameAndAge(name, age);
+        return userRepository.findByNameAndAge(name + "~", age);
     }
 
     @Override

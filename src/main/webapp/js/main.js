@@ -100,13 +100,17 @@ $(function () {
                         });
 
                     } else {
+                        data.message = "";
                         $("#users_table").append("<tr class=\"users_tr\"> <td></td> <td>" + data.result.name_t + "</td> <td>" + data.result.age + "</td></tr>")
                     }
                 }
 
                 if (data.message === "search") {
+                    data.message = "";
                     $(".users-pages").remove();
                 }
+
+                $('#error-field').text(data.message ? data.message : "");
             })
             .fail(function (jqXHR, textStatus) {
                 processError(jqXHR, options, textStatus, timeToWaitIfTimeout);

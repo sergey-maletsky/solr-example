@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserRepository extends SolrCrudRepository<User, Long> {
 
     @Query("name_t:?0")
-    Page<User> findByName(@Boost(1) String name_t, Pageable pageable);
+    Page<User> findByName(String name_t, Pageable pageable);
 
     @Query("name_t:?0")
     List<User> findByName(String name_t);
@@ -23,5 +23,5 @@ public interface UserRepository extends SolrCrudRepository<User, Long> {
     List<User> findByAge(Integer age);
 
     @Query("name_t:?0 AND age:?1")
-    List<User> findByNameAndAge(@Boost(2) String name_t, Integer age);
+    List<User> findByNameAndAge(@Boost(1) String name_t, Integer age);
 }
