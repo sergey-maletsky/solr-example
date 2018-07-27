@@ -1,6 +1,8 @@
 package com.snm.solr.controller;
 
+import com.snm.solr.model.Book;
 import com.snm.solr.model.User;
+import com.snm.solr.service.BookService;
 import com.snm.solr.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 import static org.springframework.data.solr.core.query.Query.DEFAULT_PAGE_SIZE;
 
 @RestController
@@ -22,6 +26,8 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private BookService bookService;
 
     @ApiOperation("Show the main page")
     @GetMapping
@@ -45,5 +51,17 @@ public class MainController {
         modelAndView.setViewName("index");
 
         return modelAndView;
+    }
+
+    @GetMapping("books")
+    public List<Book> getBooks() {
+        Book book = new Book("1001", "Elasticsearch Basics", "Rambabu Posa");
+        Book book1 = new Book("1000", "Plast", "my name");
+        Book book2 = new Book("1002", "Plast mas", "my name");
+        bookService.save(book);
+        bookService.save(book1);
+        bookService.save(book2);
+
+        return bookService.findByTitle("Plast");
     }
 }
